@@ -1,0 +1,11 @@
+﻿<Window x:Class="Registry.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Registry" Height="417.105" Width="811.842" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <DataGrid x:Name="Table" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="319" Width="772"/>
+        <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Left" Margin="10,340,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="DelButton" Content="Del" HorizontalAlignment="Left" Margin="90,340,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="FindButton" Content="Find" HorizontalAlignment="Left" Margin="170,340,0,0" VerticalAlignment="Top" Width="75"/>
+    </Grid>
+</Window>

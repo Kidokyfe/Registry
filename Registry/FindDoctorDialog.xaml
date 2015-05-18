@@ -1,0 +1,12 @@
+﻿<Window x:Class="Registry.FindDoctorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="FindDoctorDialog" Height="224.436" Width="307.895" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBox x:Name="Speciality" HorizontalAlignment="Left" Height="23" Margin="10,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272" TabIndex="1"/>
+        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="207,139,0,0" VerticalAlignment="Top" Width="75" IsCancel="True" TabIndex="3"/>
+        <Label Content="Enter specialty of interest:" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" Width="207"/>
+        <Button x:Name="OkButton" Content="OK" HorizontalAlignment="Left" Margin="127,139,0,0" VerticalAlignment="Top" Width="75" IsDefault="True" TabIndex="2" Click="OkButton_Click"/>
+
+    </Grid>
+</Window>

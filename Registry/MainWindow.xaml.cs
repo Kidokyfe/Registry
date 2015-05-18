@@ -30,14 +30,15 @@ namespace Registry
 
         private void InitializeTable()
         {
+            Table.ItemsSource = Doctors;
+
             Doctors.Add(new Doctor {Id = 1, Name = "Ivanov AC", Speciality = "Dentis", Cab = 101, Mo = "12:00-16:00"});
             Doctors.Add(new Doctor {Id = 2, Name = "Sidorov KV", Speciality = "Therapist", Cab = 102, Mo = "08:00-12:00"});
             Doctors.Add(new Doctor {Id = 3, Name = "Petrova AI", Speciality = "Surgeon", Cab = 103, We = "12:00-16:00"});
             Doctors.Add(new Doctor {Id = 4, Name = "Smirnova VA", Speciality = "Urologist", Cab = 104, Tu = "08:00-12:00"});
             Doctors.Add(new Doctor {Id = 5, Name = "Locev NZ", Speciality = "Cardiologist", Cab = 105, Th = "12:00-16:00", Fr = "08:00-12:00"});
             Doctors.Add(new Doctor {Id = 6, Name = "Abragimova DS", Speciality = "Otolaryngologist", Cab = 106, Tu = "12:00-16:00"});
-
-            Table.ItemsSource = Doctors;
+            Doctors.Add(new Doctor { Id = 6, Name = "Kavkazcev WS", Speciality = "Dentis", Cab = 106, Tu = "12:00-16:00" });
         }
 
 
@@ -45,10 +46,45 @@ namespace Registry
         {
             DoctorDialog dialog = new DoctorDialog();
             if (dialog.ShowDialog() == true)
-            {
-                Doctors.Add(new Doctor() { Name = dialog.Name.Text });
+            {                
+                Doctors.Add(new Doctor() {
+                    Name = dialog.Name.Text,
+                    Speciality = dialog.Speciality.Text,
+                    Cab = int.Parse(dialog.Cab.Text),
+                    Mo = dialog.Mo.Text,
+                    Tu = dialog.Tu.Text,
+                    We = dialog.We.Text,
+                    Th = dialog.Th.Text,
+                    Fr = dialog.Fr.Text,
+                    Sa = dialog.Sa.Text,
+                    Su = dialog.Su.Text,
+                });
+                Table.Items.Refresh();
             }            
             
+        }
+
+        private void DelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Doctors.Remove((Doctor)Table.SelectedItem);
+            Table.Items.Refresh();
+        }
+
+        private void FindButton_Click(object sender, RoutedEventArgs e)
+        {
+            FindDoctorDialog dialog = new FindDoctorDialog();
+            if (dialog.ShowDialog() == true)
+            {
+                StringBuilder list = new StringBuilder();
+                foreach (var elem in Doctors.FindAll(x => x.Speciality == dialog.Speciality.Text))
+                {
+                    list.Append(elem.Name + "\n");
+                }
+                if (list.Length > 0)
+                    MessageBox.Show(list.ToString(), "Finded doctors", MessageBoxButton.OK, MessageBoxImage.Information);
+                else
+                    MessageBox.Show("Empty", "Finded doctors", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }

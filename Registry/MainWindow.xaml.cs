@@ -38,7 +38,7 @@ namespace Registry
             Doctors.Add(new Doctor {Id = 4, Name = "Smirnova VA", Speciality = "Urologist", Cab = 104, Tu = "08:00-12:00"});
             Doctors.Add(new Doctor {Id = 5, Name = "Locev NZ", Speciality = "Cardiologist", Cab = 105, Th = "12:00-16:00", Fr = "08:00-12:00"});
             Doctors.Add(new Doctor {Id = 6, Name = "Abragimova DS", Speciality = "Otolaryngologist", Cab = 106, Tu = "12:00-16:00"});
-            Doctors.Add(new Doctor { Id = 6, Name = "Kavkazcev WS", Speciality = "Dentis", Cab = 106, Tu = "12:00-16:00" });
+            Doctors.Add(new Doctor {Id = 7, Name = "Kavkazcev WS", Speciality = "Dentis", Cab = 106, Tu = "12:00-16:00"});
         }
 
 
@@ -48,6 +48,7 @@ namespace Registry
             if (dialog.ShowDialog() == true)
             {                
                 Doctors.Add(new Doctor() {
+                    Id = int.Parse(dialog.Id.Text),
                     Name = dialog.Name.Text,
                     Speciality = dialog.Speciality.Text,
                     Cab = int.Parse(dialog.Cab.Text),
@@ -84,6 +85,41 @@ namespace Registry
                     MessageBox.Show(list.ToString(), "Finded doctors", MessageBoxButton.OK, MessageBoxImage.Information);
                 else
                     MessageBox.Show("Empty", "Finded doctors", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            DoctorDialog dialog = new DoctorDialog();
+
+            Doctor doctor = (Doctor)Table.SelectedItem;
+
+            dialog.Id.Text = doctor.Id.ToString();
+            dialog.Name.Text = doctor.Name;
+            dialog.Speciality.Text = doctor.Speciality;
+            dialog.Cab.Text = doctor.Cab.ToString();
+            dialog.Mo.Text = doctor.Mo;
+            dialog.Tu.Text = doctor.Tu;
+            dialog.We.Text = doctor.We;
+            dialog.Th.Text = doctor.Th;
+            dialog.Fr.Text = doctor.Fr;
+            dialog.Sa.Text = doctor.Sa;
+            dialog.Su.Text = doctor.Su;
+            if (dialog.ShowDialog() == true)
+            {
+                doctor.Id = int.Parse(dialog.Id.Text);
+                doctor.Name = dialog.Name.Text;
+                doctor.Speciality = dialog.Speciality.Text;
+                doctor.Cab = int.Parse(dialog.Cab.Text);
+                doctor.Mo = dialog.Mo.Text;
+                doctor.Tu = dialog.Tu.Text;
+                doctor.We = dialog.We.Text;
+                doctor.Th = dialog.Th.Text;
+                doctor.Fr = dialog.Fr.Text;
+                doctor.Sa = dialog.Sa.Text;
+                doctor.Su = dialog.Su.Text;
+
+                Table.Items.Refresh();
             }
         }
     }

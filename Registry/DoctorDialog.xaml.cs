@@ -23,7 +23,7 @@ namespace Registry
         public DoctorDialog()
         {
             InitializeComponent();
-            Name.Focus();
+            Id.Focus();
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -41,7 +41,9 @@ namespace Registry
 
         private bool CheckTextBoxes()
         {
-            return Regex.IsMatch(Name.Text, "[A-Z][a-z]+") &&
+            return
+                Regex.IsMatch(Id.Text, "[0-9]+") && 
+                Regex.IsMatch(Name.Text, "[A-Z][a-z]+") &&
                 Regex.IsMatch(Speciality.Text, "[A-Za-z]+") &&
                 Regex.IsMatch(Cab.Text, "[1-9]{1}[0-9]{2}") /*&&
                 Regex.IsMatch(Mo.Text, "+") &&

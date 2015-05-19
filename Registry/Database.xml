@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+	<doctor id="1">
+		<name>Ivanov AC</name>
+		<speciality>Dentis</speciality>
+		<cab>101</cab>
+		<mo>12:00-16:00</mo>
+		<tu></tu>
+		<we></we>
+		<th></th>
+		<fr></fr>
+		<sa></sa>
+		<su></su>
+	</doctor>
+	<doctor id="2">
+		<name>Sidorov KV</name>
+		<speciality>Therapist</speciality>
+		<cab>102</cab>
+		<mo>08:00-12:00</mo>
+		<tu></tu>
+		<we></we>
+		<th></th>
+		<fr></fr>
+		<sa></sa>
+		<su></su>
+	</doctor>
+	<doctor id="3">
+		<name>Petrova AI</name>
+		<speciality>Surgeon</speciality>
+		<cab>103</cab>
+		<mo>08:00-12:00</mo>
+		<tu></tu>
+		<we></we>
+		<th></th>
+		<fr></fr>
+		<sa></sa>
+		<su></su>
+	</doctor>
+	<doctor id="4">
+		<name>Smirnova VA</name>
+		<speciality>Urologist</speciality>
+		<cab>104</cab>
+		<mo>08:00-12:00</mo>
+		<tu></tu>
+		<we></we>
+		<th></th>
+		<fr></fr>
+		<sa></sa>
+		<su></su>
+	</doctor>
+	<doctor id="5">
+		<name>Locev NZ</name>
+		<speciality>Cardiologist</speciality>
+		<cab>105</cab>
+		<mo>08:00-12:00</mo>
+		<tu></tu>
+		<we></we>
+		<th></th>
+		<fr></fr>
+		<sa></sa>
+		<su></su>
+	</doctor>
+	<doctor id="6">
+		<name>Abragimova DS</name>
+		<speciality>Otolaryngologist</speciality>
+		<cab>106</cab>
+		<mo>08:00-12:00</mo>
+		<tu></tu>
+		<we></we>
+		<th></th>
+		<fr></fr>
+		<sa></sa>
+		<su></su>
+	</doctor>
+	<doctor id="7">
+		<name>Kavkazcev WS</name>
+		<speciality>Dentis</speciality>
+		<cab>107</cab>
+		<mo>08:00-12:00</mo>
+		<tu></tu>
+		<we></we>
+		<th></th>
+		<fr></fr>
+		<sa></sa>
+		<su></su>
+	</doctor>
+</list>

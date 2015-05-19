@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
+using Microsoft.Win32;
 
 namespace Registry
 {
@@ -21,24 +23,40 @@ namespace Registry
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public List<Doctor> Doctors = new List<Doctor>();
+
         public MainWindow()
         {
             InitializeComponent();
             InitializeTable();
         }
 
-        private void InitializeTable()
+        private void InitializeTable(string fileName = "..\\..\\Database.xml")
         {
-            Table.ItemsSource = Doctors;
+            Doctors.Clear();
 
-            Doctors.Add(new Doctor {Id = 1, Name = "Ivanov AC", Speciality = "Dentis", Cab = 101, Mo = "12:00-16:00"});
-            Doctors.Add(new Doctor {Id = 2, Name = "Sidorov KV", Speciality = "Therapist", Cab = 102, Mo = "08:00-12:00"});
-            Doctors.Add(new Doctor {Id = 3, Name = "Petrova AI", Speciality = "Surgeon", Cab = 103, We = "12:00-16:00"});
-            Doctors.Add(new Doctor {Id = 4, Name = "Smirnova VA", Speciality = "Urologist", Cab = 104, Tu = "08:00-12:00"});
-            Doctors.Add(new Doctor {Id = 5, Name = "Locev NZ", Speciality = "Cardiologist", Cab = 105, Th = "12:00-16:00", Fr = "08:00-12:00"});
-            Doctors.Add(new Doctor {Id = 6, Name = "Abragimova DS", Speciality = "Otolaryngologist", Cab = 106, Tu = "12:00-16:00"});
-            Doctors.Add(new Doctor {Id = 7, Name = "Kavkazcev WS", Speciality = "Dentis", Cab = 106, Tu = "12:00-16:00"});
+            XDocument database = XDocument.Load(fileName);
+            foreach (XElement e in database.Root.Elements())
+            {
+                Doctors.Add(new Doctor
+                {
+                    Id = int.Parse(e.Attribute("id").Value),
+                    Name = e.Element("name").Value,
+                    Speciality = e.Element("speciality").Value,
+                    Cab = int.Parse(e.Element("cab").Value),
+                    Mo = e.Element("mo").Value,
+                    Tu = e.Element("tu").Value,
+                    We = e.Element("we").Value,
+                    Th = e.Element("th").Value,
+                    Fr = e.Element("fr").Value,
+                    Sa = e.Element("sa").Value,
+                    Su = e.Element("su").Value
+                });
+            }
+
+            Table.ItemsSource = Doctors;
+            Table.Items.Refresh();
         }
 
 
@@ -48,7 +66,7 @@ namespace Registry
             if (dialog.ShowDialog() == true)
             {                
                 Doctors.Add(new Doctor() {
-                    Id = int.Parse(dialog.Id.Text),
+                    Id = Doctors.Max(doctor => doctor.Id) + 1, // LINQ
                     Name = dialog.Name.Text,
                     Speciality = dialog.Speciality.Text,
                     Cab = int.Parse(dialog.Cab.Text),
@@ -94,7 +112,6 @@ namespace Registry
 
             Doctor doctor = (Doctor)Table.SelectedItem;
 
-            dialog.Id.Text = doctor.Id.ToString();
             dialog.Name.Text = doctor.Name;
             dialog.Speciality.Text = doctor.Speciality;
             dialog.Cab.Text = doctor.Cab.ToString();
@@ -107,7 +124,6 @@ namespace Registry
             dialog.Su.Text = doctor.Su;
             if (dialog.ShowDialog() == true)
             {
-                doctor.Id = int.Parse(dialog.Id.Text);
                 doctor.Name = dialog.Name.Text;
                 doctor.Speciality = dialog.Speciality.Text;
                 doctor.Cab = int.Parse(dialog.Cab.Text);
@@ -121,6 +137,56 @@ namespace Registry
 
                 Table.Items.Refresh();
             }
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            XDocument database = new XDocument();
+            database.Add(new XElement("list"));
+            foreach (var el in Doctors)
+            {
+                XElement doctor = new XElement("doctor",
+                    new XAttribute("id", el.Id),
+                    new XElement("name", el.Name),
+                    new XElement("speciality", el.Speciality),
+                    new XElement("cab", el.Cab),
+                    new XElement("mo", el.Mo),
+                    new XElement("tu", el.Tu),
+                    new XElement("we", el.We),
+                    new XElement("th", el.Th),
+                    new XElement("fr", el.Fr),
+                    new XElement("sa", el.Sa),
+                    new XElement("su", el.Su)
+                );
+
+                database.Root.Add(doctor);
+            }
+
+            SaveFileDialog dialog = new SaveFileDialog();
+
+            dialog.FileName = "DatabaseOut";
+            dialog.DefaultExt = ".xml";
+            dialog.Filter = "XML files (*.xml)|*.xml";
+
+            string curDir = System.IO.Directory.GetCurrentDirectory();
+            dialog.InitialDirectory = curDir.Remove(curDir.IndexOf("\\bin\\"));
+
+            if (dialog.ShowDialog() == true)
+                database.Save(dialog.FileName);
+        }
+
+        private void OpenButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+
+            dialog.DefaultExt = ".xml";
+            dialog.Filter = "XML files (*.xml)|*.xml";
+
+            string curDir = System.IO.Directory.GetCurrentDirectory();
+            dialog.InitialDirectory = curDir.Remove(curDir.IndexOf("\\bin\\"));
+
+            if (dialog.ShowDialog() == true)
+                InitializeTable(dialog.FileName);
         }
     }
 }

@@ -15,7 +15,9 @@ namespace Registry
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        /// <summary>
+        /// List of all doctors in database.
+        /// </summary>
         public List<Doctor> Doctors = new List<Doctor>();
 
         public MainWindow()
@@ -24,6 +26,10 @@ namespace Registry
             InitializeTable();
         }
 
+        /// <summary>
+        /// Initialize datagrid on window and list of doctors
+        /// </summary>
+        /// <param name="fileName">Input database. Work only with XML.</param>
         private void InitializeTable(string fileName = @"..\..\Database.xml")
         {
             Doctors.Clear();
@@ -51,7 +57,11 @@ namespace Registry
             Table.Items.Refresh();
         }
 
-
+        /// <summary>
+        /// Adding doctor to list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             DoctorDialog dialog = new DoctorDialog();
@@ -79,6 +89,12 @@ namespace Registry
             Table.Items.Refresh();
         }
 
+        /// <summary>
+        /// Check doctor for adding to list.
+        /// Collisions: the same name, the same schedule.
+        /// </summary>
+        /// <param name="newDoctor">Added doctor</param>
+        /// <returns>True, if it had no collisions; else - otherwise.</returns>
         private bool CheckDoctorForAdd(Doctor newDoctor)
         {
             foreach (var doctor in Doctors)
@@ -104,12 +120,23 @@ namespace Registry
             return true;
         }
 
+        /// <summary>
+        /// Delete selected doctor from list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DelButton_Click(object sender, RoutedEventArgs e)
         {
             Doctors.Remove((Doctor)Table.SelectedItem);
             Table.Items.Refresh();
         }
 
+        /// <summary>
+        /// Find doctors by speciality.
+        /// Show finding dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FindButton_Click(object sender, RoutedEventArgs e)
         {
             FindDoctorDialog dialog = new FindDoctorDialog();
@@ -125,6 +152,12 @@ namespace Registry
             }
         }
 
+        /// <summary>
+        /// Change some information about selected doctor.
+        /// Show editing dialog.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             DoctorDialog dialog = new DoctorDialog();
@@ -177,6 +210,12 @@ namespace Registry
             Table.Items.Refresh();
         }
 
+        /// <summary>
+        /// Check new information about doctor, that have no collisions in list.
+        /// Collisions: the same name, the same schedule.
+        /// </summary>
+        /// <param name="newDoctor"></param>
+        /// <returns>True, if it had no collisions; else - otherwise.</returns>
         private bool CheckDoctorForEdit(Doctor newDoctor)
         {
             int countEquals = 0;
@@ -204,6 +243,11 @@ namespace Registry
             return true;
         }
 
+        /// <summary>
+        /// Save list of doctors to XML file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             XDocument database = new XDocument();
@@ -242,6 +286,11 @@ namespace Registry
                 database.Save(dialog.FileName);
         }
 
+        /// <summary>
+        /// Reading data (list of doctors) from database (XML file).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog

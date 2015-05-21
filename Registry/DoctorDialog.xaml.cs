@@ -27,6 +27,13 @@ namespace Registry
                 MessageBox.Show("Invalid input", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
+        /// <summary>
+        /// Check textboxes for correct input from user.
+        /// </summary>
+        /// <returns>
+        /// True if all text boxes tested regular expressions,
+        /// false - otherwise.
+        /// </returns>
         private bool CheckTextBoxes()
         {
             string regExTimeInterval =

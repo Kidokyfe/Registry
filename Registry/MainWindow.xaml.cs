@@ -244,10 +244,11 @@ namespace Registry
 
         private void OpenButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-
-            dialog.DefaultExt = ".xml";
-            dialog.Filter = "XML files (*.xml)|*.xml";
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                DefaultExt = ".xml",
+                Filter = "XML files (*.xml)|*.xml"
+            };
 
             string curDir = System.IO.Directory.GetCurrentDirectory();
             dialog.InitialDirectory = curDir.Remove(curDir.IndexOf("\\bin\\", StringComparison.Ordinal));

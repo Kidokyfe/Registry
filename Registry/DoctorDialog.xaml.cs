@@ -21,7 +21,7 @@ namespace Registry
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            if (CheckTextBoxes() == true)
+            if (CheckTextBoxes())
                 DialogResult = true;
             else
                 MessageBox.Show("Invalid input", "Error", MessageBoxButton.OK, MessageBoxImage.Error);

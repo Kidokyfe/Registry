@@ -55,24 +55,53 @@ namespace Registry
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             DoctorDialog dialog = new DoctorDialog();
-            if (dialog.ShowDialog() == true)
-            {                
-                Doctors.Add(new Doctor() {
-                    Id = Doctors.Max(doctor => doctor.Id) + 1, // LINQ
-                    Name = dialog.Name.Text,
-                    Speciality = dialog.Speciality.Text,
-                    Cab = int.Parse(dialog.Cab.Text),
-                    Mo = dialog.Mo.Text,
-                    Tu = dialog.Tu.Text,
-                    We = dialog.We.Text,
-                    Th = dialog.Th.Text,
-                    Fr = dialog.Fr.Text,
-                    Sa = dialog.Sa.Text,
-                    Su = dialog.Su.Text,
-                });
-                Table.Items.Refresh();
-            }            
             
+            if (dialog.ShowDialog() != true) return;
+
+            Doctor newDoctor = new Doctor
+            {
+                Id = Doctors.Count > 0 ? Doctors.Max(doctor => doctor.Id) + 1 : 1, // LINQ
+                Name = dialog.Name.Text,
+                Speciality = dialog.Speciality.Text,
+                Cab = int.Parse(dialog.Cab.Text),
+                Mo = dialog.Mo.Text,
+                Tu = dialog.Tu.Text,
+                We = dialog.We.Text,
+                Th = dialog.Th.Text,
+                Fr = dialog.Fr.Text,
+                Sa = dialog.Sa.Text,
+                Su = dialog.Su.Text,
+            };
+
+            if (CheckDoctorForAdd(newDoctor))
+                Doctors.Add(newDoctor);
+
+            Table.Items.Refresh();
+        }
+
+        private bool CheckDoctorForAdd(Doctor newDoctor)
+        {
+            foreach (var doctor in Doctors)
+            {
+                if (newDoctor.Name.Equals(doctor.Name))
+                {
+                    MessageBox.Show("Invalid input", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+                if (newDoctor.Cab.Equals(doctor.Cab) &&
+                    (newDoctor.Mo.Equals(doctor.Mo) && newDoctor.Mo.Length > 0 ||
+                     newDoctor.Tu.Equals(doctor.Tu) && newDoctor.Tu.Length > 0 ||
+                     newDoctor.We.Equals(doctor.We) && newDoctor.We.Length > 0 ||
+                     newDoctor.Th.Equals(doctor.Th) && newDoctor.Th.Length > 0 ||
+                     newDoctor.Fr.Equals(doctor.Fr) && newDoctor.Fr.Length > 0 ||
+                     newDoctor.Sa.Equals(doctor.Sa) && newDoctor.Sa.Length > 0 ||
+                     newDoctor.Su.Equals(doctor.Su) && newDoctor.Su.Length > 0))
+                {
+                    MessageBox.Show("Invalid input", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void DelButton_Click(object sender, RoutedEventArgs e)
@@ -91,10 +120,8 @@ namespace Registry
                 {
                     list.Append(elem.Name + "\n");
                 }
-                if (list.Length > 0)
-                    MessageBox.Show(list.ToString(), "Finded doctors", MessageBoxButton.OK, MessageBoxImage.Information);
-                else
-                    MessageBox.Show("Empty", "Finded doctors", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(list.Length > 0 ? list.ToString() : "Empty", "Finded doctors", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
             }
         }
 
@@ -103,6 +130,8 @@ namespace Registry
             DoctorDialog dialog = new DoctorDialog();
 
             Doctor doctor = (Doctor)Table.SelectedItem;
+
+            if (doctor == null) return;
 
             dialog.Name.Text = doctor.Name;
             dialog.Speciality.Text = doctor.Speciality;
@@ -114,21 +143,65 @@ namespace Registry
             dialog.Fr.Text = doctor.Fr;
             dialog.Sa.Text = doctor.Sa;
             dialog.Su.Text = doctor.Su;
-            if (dialog.ShowDialog() == true)
-            {
-                doctor.Name = dialog.Name.Text;
-                doctor.Speciality = dialog.Speciality.Text;
-                doctor.Cab = int.Parse(dialog.Cab.Text);
-                doctor.Mo = dialog.Mo.Text;
-                doctor.Tu = dialog.Tu.Text;
-                doctor.We = dialog.We.Text;
-                doctor.Th = dialog.Th.Text;
-                doctor.Fr = dialog.Fr.Text;
-                doctor.Sa = dialog.Sa.Text;
-                doctor.Su = dialog.Su.Text;
+            
+            if (dialog.ShowDialog() != true) return;
 
-                Table.Items.Refresh();
+            Doctor newDoctor = new Doctor
+            {
+                Id = doctor.Id,
+                Name = dialog.Name.Text,
+                Speciality = dialog.Speciality.Text,
+                Cab = int.Parse(dialog.Cab.Text),
+                Mo = dialog.Mo.Text,
+                Tu = dialog.Tu.Text,
+                We = dialog.We.Text,
+                Th = dialog.Th.Text,
+                Fr = dialog.Fr.Text,
+                Sa = dialog.Sa.Text,
+                Su = dialog.Su.Text,
+            };
+
+            if (!CheckDoctorForEdit(newDoctor)) return;
+            
+            doctor.Name = dialog.Name.Text;
+            doctor.Speciality = dialog.Speciality.Text;
+            doctor.Cab = int.Parse(dialog.Cab.Text);
+            doctor.Mo = dialog.Mo.Text;
+            doctor.Tu = dialog.Tu.Text;
+            doctor.We = dialog.We.Text;
+            doctor.Th = dialog.Th.Text;
+            doctor.Fr = dialog.Fr.Text;
+            doctor.Sa = dialog.Sa.Text;
+            doctor.Su = dialog.Su.Text;
+
+            Table.Items.Refresh();
+        }
+
+        private bool CheckDoctorForEdit(Doctor newDoctor)
+        {
+            int countEquals = 0;
+
+            foreach (var doctor in Doctors)
+            {
+                if (newDoctor.Name.Equals(doctor.Name) && ++countEquals > 1)
+                {
+                    MessageBox.Show("Invalid input", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+                if (newDoctor.Cab.Equals(doctor.Cab) &&
+                    (newDoctor.Mo.Equals(doctor.Mo) && newDoctor.Mo.Length > 0 ||
+                     newDoctor.Tu.Equals(doctor.Tu) && newDoctor.Tu.Length > 0 ||
+                     newDoctor.We.Equals(doctor.We) && newDoctor.We.Length > 0 ||
+                     newDoctor.Th.Equals(doctor.Th) && newDoctor.Th.Length > 0 ||
+                     newDoctor.Fr.Equals(doctor.Fr) && newDoctor.Fr.Length > 0 ||
+                     newDoctor.Sa.Equals(doctor.Sa) && newDoctor.Sa.Length > 0 ||
+                     newDoctor.Su.Equals(doctor.Su) && newDoctor.Su.Length > 0) && ++countEquals > 1)
+                {
+                    MessageBox.Show("Invalid input", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
             }
+            return true;
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -154,14 +227,16 @@ namespace Registry
                 database.Root.Add(doctor);
             }
 
-            SaveFileDialog dialog = new SaveFileDialog();
+            SaveFileDialog dialog = new SaveFileDialog
+            {
+                FileName = "DatabaseOut",
+                DefaultExt = ".xml",
+                Filter = "XML files (*.xml)|*.xml"
+            };
 
-            dialog.FileName = "DatabaseOut";
-            dialog.DefaultExt = ".xml";
-            dialog.Filter = "XML files (*.xml)|*.xml";
 
             string curDir = System.IO.Directory.GetCurrentDirectory();
-            dialog.InitialDirectory = curDir.Remove(curDir.IndexOf("\\bin\\"));
+            dialog.InitialDirectory = curDir.Remove(curDir.IndexOf("\\bin\\", StringComparison.Ordinal));
 
             if (dialog.ShowDialog() == true)
                 database.Save(dialog.FileName);

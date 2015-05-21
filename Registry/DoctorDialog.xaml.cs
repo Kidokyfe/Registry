@@ -29,17 +29,19 @@ namespace Registry
 
         private bool CheckTextBoxes()
         {
+            string regExTimeInterval =
+                @"(^(([01][0-9])|([2][0-4])):(([0-5][0-9])|(60))-(([01][0-9])|([2][0-4])):(([0-5][0-9])|(60))$)|(^$)";
             return
-                Regex.IsMatch(Name.Text, "[A-Z][a-z]+") &&
-                Regex.IsMatch(Speciality.Text, "[A-Za-z]+") &&
-                Regex.IsMatch(Cab.Text, "[1-9]{1}[0-9]{2}") /*&&
-                Regex.IsMatch(Mo.Text, "+") &&
-                Regex.IsMatch(Tu.Text, "+") &&
-                Regex.IsMatch(We.Text, "+") &&
-                Regex.IsMatch(Th.Text, "+") &&
-                Regex.IsMatch(Fr.Text, "+") &&
-                Regex.IsMatch(Sa.Text, "+") &&
-                Regex.IsMatch(Su.Text, "+")*/;
+                Regex.IsMatch(Name.Text, @"^[A-Z][a-z]+\s[A-Z]{2}$") &&
+                Regex.IsMatch(Speciality.Text, @"^[A-Z][a-z]+$") &&
+                Regex.IsMatch(Cab.Text, @"^[1-9][0-9]{2}$") &&
+                Regex.IsMatch(Mo.Text, regExTimeInterval) &&
+                Regex.IsMatch(Tu.Text, regExTimeInterval) &&
+                Regex.IsMatch(We.Text, regExTimeInterval) &&
+                Regex.IsMatch(Th.Text, regExTimeInterval) &&
+                Regex.IsMatch(Fr.Text, regExTimeInterval) &&
+                Regex.IsMatch(Sa.Text, regExTimeInterval) &&
+                Regex.IsMatch(Su.Text, regExTimeInterval);
         }
     }
 }

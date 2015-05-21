@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DoctorLibrary">
+      <HintPath>.\DoctorLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -68,7 +71,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Doctor.cs" />
     <Compile Include="FindDoctorDialog.xaml.cs">
       <DependentUpon>FindDoctorDialog.xaml</DependentUpon>
     </Compile>

@@ -2,19 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Xml.Linq;
+using DoctorLibrary;
 using Microsoft.Win32;
+
 
 namespace Registry
 {
@@ -32,7 +24,7 @@ namespace Registry
             InitializeTable();
         }
 
-        private void InitializeTable(string fileName = "..\\..\\Database.xml")
+        private void InitializeTable(string fileName = @"..\..\Database.xml")
         {
             Doctors.Clear();
 
@@ -183,7 +175,7 @@ namespace Registry
             dialog.Filter = "XML files (*.xml)|*.xml";
 
             string curDir = System.IO.Directory.GetCurrentDirectory();
-            dialog.InitialDirectory = curDir.Remove(curDir.IndexOf("\\bin\\"));
+            dialog.InitialDirectory = curDir.Remove(curDir.IndexOf("\\bin\\", StringComparison.Ordinal));
 
             if (dialog.ShowDialog() == true)
                 InitializeTable(dialog.FileName);

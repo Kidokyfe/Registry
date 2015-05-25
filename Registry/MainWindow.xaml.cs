@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -22,8 +23,16 @@ namespace Registry
 
         public MainWindow()
         {
-            InitializeComponent();
-            InitializeTable();
+            try
+            {
+                InitializeComponent();
+                InitializeTable();
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
 
         /// <summary>
@@ -104,14 +113,7 @@ namespace Registry
                     MessageBox.Show("Invalid input", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
-                if (newDoctor.Cab.Equals(doctor.Cab) &&
-                    (newDoctor.Mo.Equals(doctor.Mo) && newDoctor.Mo.Length > 0 ||
-                     newDoctor.Tu.Equals(doctor.Tu) && newDoctor.Tu.Length > 0 ||
-                     newDoctor.We.Equals(doctor.We) && newDoctor.We.Length > 0 ||
-                     newDoctor.Th.Equals(doctor.Th) && newDoctor.Th.Length > 0 ||
-                     newDoctor.Fr.Equals(doctor.Fr) && newDoctor.Fr.Length > 0 ||
-                     newDoctor.Sa.Equals(doctor.Sa) && newDoctor.Sa.Length > 0 ||
-                     newDoctor.Su.Equals(doctor.Su) && newDoctor.Su.Length > 0))
+                if (newDoctor.ScheduleEquals(doctor))
                 {
                     MessageBox.Show("Invalid input", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
@@ -227,14 +229,7 @@ namespace Registry
                     MessageBox.Show("Invalid input", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
-                if (newDoctor.Cab.Equals(doctor.Cab) &&
-                    (newDoctor.Mo.Equals(doctor.Mo) && newDoctor.Mo.Length > 0 ||
-                     newDoctor.Tu.Equals(doctor.Tu) && newDoctor.Tu.Length > 0 ||
-                     newDoctor.We.Equals(doctor.We) && newDoctor.We.Length > 0 ||
-                     newDoctor.Th.Equals(doctor.Th) && newDoctor.Th.Length > 0 ||
-                     newDoctor.Fr.Equals(doctor.Fr) && newDoctor.Fr.Length > 0 ||
-                     newDoctor.Sa.Equals(doctor.Sa) && newDoctor.Sa.Length > 0 ||
-                     newDoctor.Su.Equals(doctor.Su) && newDoctor.Su.Length > 0) && ++countEquals > 1)
+                if (newDoctor.ScheduleEquals(doctor) && ++countEquals > 1)
                 {
                     MessageBox.Show("Invalid input", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;

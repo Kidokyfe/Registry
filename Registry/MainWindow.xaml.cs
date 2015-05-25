@@ -19,7 +19,7 @@ namespace Registry
         /// <summary>
         /// List of all doctors in database.
         /// </summary>
-        public List<Doctor> Doctors = new List<Doctor>();
+        public DoctorList Doctors = new DoctorList();
 
         public MainWindow()
         {
@@ -27,7 +27,6 @@ namespace Registry
             {
                 InitializeComponent();
                 InitializeTable();
-
             }
             catch (Exception e)
             {
@@ -299,6 +298,11 @@ namespace Registry
 
             if (dialog.ShowDialog() == true)
                 InitializeTable(dialog.FileName);
+        }
+
+        private void InfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            Doctors.Info();
         }
     }
 }

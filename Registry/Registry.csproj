@@ -71,6 +71,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DoctorList.cs" />
     <Compile Include="FindDoctorDialog.xaml.cs">
       <DependentUpon>FindDoctorDialog.xaml</DependentUpon>
     </Compile>
